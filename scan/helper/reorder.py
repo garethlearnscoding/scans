@@ -12,6 +12,5 @@ def reorder_doc(doc:fitz.Document) -> fitz.Document:
     for src_idx in order:
         out.insert_pdf(src, from_page=src_idx, to_page=src_idx)
 
-    out.close()
     return out
     

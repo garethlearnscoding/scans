@@ -2,7 +2,7 @@ import argparse
 from pathlib import Path
 from batch import proc_batch
 from single import proc_file
-from helper import validate_fs, validate_sm
+from helper import validate_fs, validate_sm,validate_cm
 
 
 def main():    
@@ -12,7 +12,11 @@ def main():
                         metavar="FILENAME",
                         help="Filepath of the singular PDF to process. Leave out for batch processing.")
     
-    parser.add_argument("-c","--crop",type=int,nargs=4,default=None,
+    parser.add_argument("-cm","--crop-mode",type=validate_cm,default=None,dest="cm",
+                        metavar="CROP MODE",
+                        help="Mode to crop document pages by: 'DEFAULT' or 'INP'; Leave out for no cropping.")
+                        
+    parser.add_argument("-c","--crop",type=int,nargs=4,default=None,dest="crop",
                         metavar=("LEFT","RIGHT","TOP","BOTTOM"),
                         help="Space separated margin values (px) in order.")
     
@@ -37,12 +41,22 @@ def main():
     if args.file:
         proc_file(
             in_file=args.file,
-            mode=args.sm,
+            crop_mode=args.cm,
+            margins=args.crop,
+            split_mode=args.sm,
             split_lst = args.split,
             grp_counts= args.groups,
             format_string=args.fs
         )            
     else:
-        proc_batch(args.crop,args.fs)
+        proc_batch(
+            in_file=args.file,
+            crop_mode = args.cm,
+            margins=args.crop,
+            mode=args.sm,
+            split_lst = args.split,
+            grp_counts= args.groups,
+            format_string=args.fs
+        )
 
 main()

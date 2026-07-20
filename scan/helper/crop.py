@@ -1,31 +1,33 @@
 import fitz
+from var import CropMode,A4_MARGINS,Margins
 
 def crop_page(
         page:fitz.Page, 
-        left:int, 
-        right:int, 
-        top:int, 
-        bottom:int
+        margin:Margins
     ) -> None:
     
     rect = page.rect
 
     page.set_cropbox(
         fitz.Rect(
-            rect.x0 + left,
-            rect.y0 + top,
-            rect.x1 - right,
-            rect.y1 - bottom,
+            rect.x0 + margin.left,
+            rect.y0 + margin.top,
+            rect.x1 - margin.right,
+            rect.y1 - margin.bottom,
         )
     )
 
 
 def crop_doc(
     doc:fitz.Document,
-    left:int = 15,
-    right:int = 15,
-    top:int =0,
-    bottom:int = 125
+    crop_mode:CropMode,
+    margin: list[int] | None
 ) -> None:
+    if crop_mode == CropMode.NONE:
+        return
+    elif crop_mode == CropMode.DEFAULT:
+        margin = A4_MARGINS
+    elif crop_mode == CropMode.INP:
+        margin = Margins(*margin)
     for page in doc:
-        crop_page(page,left,right,top,bottom)
+        crop_page(page,margin)

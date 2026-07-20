@@ -8,8 +8,8 @@ class Margins:
     bottom: int
 
 A4_MARGINS = Margins(
-    left = 25,
-    right = 25,
+    left = 28,
+    right = 28,
     top =0,
-    bottom= 125
+    bottom= 179
 )

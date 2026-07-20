@@ -33,7 +33,7 @@ def proc_file(
 
     for grp in grps:
         for id,doc in enumerate(grp,start=1):
-            filename = format_string.format(stem = stem,id = id)
+            filename = format_string.format(stem = stem,id = f"{id:02d}")
             out_file = output_path / filename
             doc.save(out_file)
             print(f"PDF saved to: {out_file.stem}")

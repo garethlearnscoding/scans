@@ -50,10 +50,9 @@ def main():
         )            
     else:
         proc_batch(
-            in_file=args.file,
-            crop_mode = args.cm,
+            crop_mode=args.cm,
             margins=args.crop,
-            mode=args.sm,
+            split_mode=args.sm,
             split_lst = args.split,
             grp_counts= args.groups,
             format_string=args.fs

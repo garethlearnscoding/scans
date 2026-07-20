@@ -1,12 +1,17 @@
 from pathlib import Path
 import fitz
 from helper import build_reorder_map,split_doc,crop_doc,reorder_doc
+from var import SplitMode
 
 def proc_file(
     in_file: str,
-    split_idxs: list[int] | None = None,
-    margins: list[int] | None = None,
-    format_string: str = "{stem}_{id}"
+    split_lst: list[int] | None,
+    margins: list[int] | None,
+    mode:SplitMode,
+    grp_counts: list[int] | None,
+    format_string: str = "{stem}_{id}",
+
+
 ):
     input_path: Path = Path("input-document") / in_file
     output_path: Path = Path("ouput-document")
@@ -19,19 +24,20 @@ def proc_file(
 
     src = fitz.open(input_path)
 
-    out = [reorder_doc(src)]
+    out = reorder_doc(src)
     
     if margins is not None:
-        crop_doc(out[0],*margins)
+        crop_doc(out,*margins)
 
-    if split_idxs is not None:
-        out = split_doc(out[0],split_idxs)
+    
+    grps = split_doc(out,mode,split_lst,grp_counts)
 
     stem = input_path.stem
 
-    for id,doc in enumerate(out):
-        filename = format_string.format(stem = stem,id = id)
-        doc.save(output_path / filename)
-        print(f"PDF saved to: {output_path.stem}")
+    for grp in grps:
+        for id,doc in enumerate(grp,start=1):
+            filename = format_string.format(stem = stem,id = id)
+            doc.save(output_path / filename)
+            print(f"PDF saved to: {output_path.stem}")
 
     src.close()

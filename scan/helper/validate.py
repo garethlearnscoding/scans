@@ -34,3 +34,13 @@ def validate_cm(crop_mode:str) -> CropMode:
         raise argparse.ArgumentTypeError(
             f"'{crop_mode}' is not an available mode to crop document pages by."
         )
+    
+def validate_grp(grp) -> list[tuple[str,int]]:
+    print(grp)
+    if "," not in grp:
+        raise argparse.ArgumentTypeError(
+            f"'{grp}' is not in the correct form. Should be provided as 'name,count'"
+        )
+    else:
+        name,idx = grp.split(",")
+        return (name,int(idx))

@@ -37,7 +37,7 @@ def main():
                         help="Format string including '{stem}' and '{id}' for file naming convention")
     
     args = parser.parse_args()
-
+    print(args)
     if args.file:
         proc_file(
             in_file=args.file,

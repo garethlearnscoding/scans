@@ -92,7 +92,7 @@ def group_splits(
 ) -> list[tuple[fitz.Document]]:
     
     if grp_counts is None:
-        grouped_docs = [tuple(output_docs)]
+        grouped_docs = [(output_docs,)]
 
     elif isinstance(grp_counts,int):
         grouped_docs = list(zip_longest(output_docs[::grp_counts],output_docs[1::grp_counts]))
@@ -117,18 +117,23 @@ def split_doc(
         split_lst: list[int],
         grp_counts: list[int]
 ) -> list[tuple[fitz.Document]]:
-    
-    if mode == SplitMode.IDX:
+
+        
+    if mode == SplitMode.NONE or mode is None:
+        docs = doc
+
+    elif mode == SplitMode.IDX:
         docs = split_by_page_no(doc,split_lst)
 
     elif mode == SplitMode.COUNT:
         docs = split_by_no_of_pages(doc,split_lst)
     
-    elif mode == SplitMode.NONE:
-        docs = doc
         
     else:
         raise KeyError("Split mode provided is incorrect.")
+
+    print("docs:")
+    print(docs)
         
     output_docs = group_splits(docs,grp_counts)
     

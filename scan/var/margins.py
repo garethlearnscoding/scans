@@ -7,9 +7,15 @@ class Margins:
     top: int
     bottom: int
 
+# A4_MARGINS = Margins(
+#     left = 28,
+#     right = 28,
+#     top =0,
+#     bottom= 179
+# )
 A4_MARGINS = Margins(
-    left = 28,
-    right = 28,
+    left = 0,
+    right = 0,
     top =0,
-    bottom= 179
+    bottom= 0
 )

@@ -25,12 +25,14 @@ def proc_file(
 
     out = reorder_doc(src)
 
+    # print(crop_mode)
     crop_doc(out,crop_mode,margins)
 
     grps = split_doc(out,split_mode,split_lst,grp_counts)
 
     stem = input_path.stem
 
+    print(grps)
     for grp in grps:
         for id,doc in enumerate(grp,start=1):
             filename = format_string.format(stem = stem,id = f"{id:02d}")

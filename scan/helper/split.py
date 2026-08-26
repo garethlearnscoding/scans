@@ -88,7 +88,7 @@ def split_by_no_of_pages(
 
 def group_splits(
         output_docs:list[fitz.Document],
-        grp_counts:int | list[int] | None,
+        grp_counts:list[tuple[str,int]] | None,
 ) -> list[tuple[fitz.Document]]:
     
     if grp_counts is None:
@@ -98,14 +98,14 @@ def group_splits(
         grouped_docs = list(zip_longest(output_docs[::grp_counts],output_docs[1::grp_counts]))
 
     elif isinstance(grp_counts,list):
-        if sum(grp_counts) > len(output_docs):
+        if sum([i[-1] for i in grp_counts]) > len(output_docs):
             raise IndexError("Total provided counts for grouping exceeds number of available documents.")
         
         grouped_docs = []
         i = 0
         
-        for c in grp_counts:
-            grouped_docs.append(tuple(output_docs[i:i + c]))
+        for stem,c in grp_counts:
+            grouped_docs.append(tuple([stem]+output_docs[i:i + c]))
             i += c
         
     return grouped_docs

@@ -34,7 +34,10 @@ def proc_file(
 
     print(grps)
     for grp in grps:
-        for id,doc in enumerate(grp,start=1):
+        if (stem := grp[0]) is None:
+            stem = input_path.stem
+        print("STEM:",stem)
+        for id,doc in enumerate(grp[1::],start=1):
             filename = format_string.format(stem = stem,id = f"{id:02d}")
             out_file = output_path / filename
             doc.save(out_file)

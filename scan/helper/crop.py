@@ -1,15 +1,15 @@
-import fitz
+import pymupdf
 from var import CropMode,A4_MARGINS,Margins
 
 def crop_page(
-        page:fitz.Page, 
+        page:pymupdf.Page, 
         margin:Margins
     ) -> None:
     
     rect = page.rect
 
     page.set_cropbox(
-        fitz.Rect(
+        pymupdf.Rect(
             rect.x0 + margin.left,
             rect.y0 + margin.top,
             rect.x1 - margin.right,
@@ -19,7 +19,7 @@ def crop_page(
 
 
 def crop_doc(
-    doc:fitz.Document,
+    doc:pymupdf.Document,
     crop_mode:CropMode,
     margin: list[int] | None
 ) -> None:

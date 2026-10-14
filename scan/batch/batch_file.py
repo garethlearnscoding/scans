@@ -1,5 +1,4 @@
 from pathlib import Path
-import fitz
 from single import proc_file
 from var import SplitMode,CropMode
 

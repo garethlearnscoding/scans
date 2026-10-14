@@ -1,13 +1,13 @@
-import fitz
+import pymupdf
 from itertools import zip_longest
 from var import SplitMode
 
 def split_by_page_no(
-        doc:fitz.Document,
+        doc:pymupdf.Document,
         split_idxs:list[int],
-    ) -> list[fitz.Document]:
+    ) -> list[pymupdf.Document]:
     """
-    Splits a fitz.Document object into three separate 
+    Splits a pymupdf.Document object into three separate 
     documents based on 1-indexed, via page numbers(inclusive):
 
       First  doc: doc[0] ... split_idxs[0]
@@ -34,7 +34,7 @@ def split_by_page_no(
     output_docs = []
 
     for i in range(len(split_idxs)-1):
-        part = fitz.open()
+        part = pymupdf.open()
 
         start = split_idxs[i]+1
 
@@ -48,11 +48,11 @@ def split_by_page_no(
     return output_docs
 
 def split_by_no_of_pages(
-        doc:fitz.Document,
+        doc:pymupdf.Document,
         page_counts: list[int],
-) -> list[fitz.Document]:
+) -> list[pymupdf.Document]:
     """
-    Splits a fitz.Document object into three separate 
+    Splits a pymupdf.Document object into three separate 
     documents via number of pages.
     
     IndexError will be raised if the maximum file number provided in 
@@ -74,7 +74,7 @@ def split_by_no_of_pages(
 
     for i in range(len(page_counts)):
 
-        part = fitz.open()
+        part = pymupdf.open()
 
         end = start + page_counts[i]
 
@@ -87,9 +87,9 @@ def split_by_no_of_pages(
     return output_docs
 
 def group_splits(
-        output_docs:list[fitz.Document],
+        output_docs:list[pymupdf.Document],
         grp_counts:list[tuple[str,int]] | None,
-) -> list[tuple[fitz.Document]]:
+) -> list[tuple[pymupdf.Document]]:
     
     if grp_counts is None:
         grouped_docs = [(output_docs,)]
@@ -112,11 +112,11 @@ def group_splits(
 
 
 def split_doc(
-        doc:fitz.Document,
+        doc:pymupdf.Document,
         mode: SplitMode,
         split_lst: list[int],
         grp_counts: list[int]
-) -> list[tuple[fitz.Document]]:
+) -> list[tuple[pymupdf.Document]]:
 
         
     if mode == SplitMode.NONE or mode is None:

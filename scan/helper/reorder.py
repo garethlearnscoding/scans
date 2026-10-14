@@ -1,14 +1,13 @@
-from pathlib import Path
-import fitz
+import pymupdf
 from helper import  build_reorder_map
 
 
-def reorder_doc(doc:fitz.Document) -> fitz.Document:
+def reorder_doc(doc:pymupdf.Document) -> pymupdf.Document:
     src = doc
     total_pages = len(src)
     order: list = build_reorder_map(total_pages)
 
-    out = fitz.open()
+    out = pymupdf.open()
     for src_idx in order:
         out.insert_pdf(src, from_page=src_idx, to_page=src_idx)
 

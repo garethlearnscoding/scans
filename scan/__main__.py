@@ -1,5 +1,4 @@
 import argparse
-from pathlib import Path
 from batch import proc_batch
 from single import proc_file
 from helper import validate_fs, validate_sm,validate_cm, validate_grp

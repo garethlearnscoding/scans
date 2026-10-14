@@ -1,6 +1,6 @@
 from pathlib import Path
-import fitz
-from helper import build_reorder_map,split_doc,crop_doc,reorder_doc
+import pymupdf
+from helper import split_doc,crop_doc,reorder_doc
 from var import SplitMode, CropMode
 
 def proc_file(
@@ -21,7 +21,7 @@ def proc_file(
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    src = fitz.open(input_path)
+    src = pymupdf.open(input_path)
 
     out = reorder_doc(src)
 

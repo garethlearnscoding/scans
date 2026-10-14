@@ -38,7 +38,6 @@ def main():
     
     args = parser.parse_args()
     print(args)
-    print(args)
 
     if args.file:
         proc_file(

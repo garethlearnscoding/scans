@@ -7,15 +7,16 @@ class Margins:
     top: int
     bottom: int
 
-# A4_MARGINS = Margins(
-#     left = 28,
-#     right = 28,
-#     top =0,
-#     bottom= 179
-# )
+# If scan was for full area (document feeder)
 A4_MARGINS = Margins(
-    left = 0,
-    right = 0,
+    left = 14,
+    right = 14,
     top =0,
-    bottom= 0
+    bottom= 250
 )
+# A4_MARGINS = Margins(
+#     left = 0,
+#     right = 0,
+#     top =0,
+#     bottom= 0
+# )

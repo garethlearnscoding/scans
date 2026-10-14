@@ -28,19 +28,25 @@ def proc_file(
     # print(crop_mode)
     crop_doc(out,crop_mode,margins)
 
+    out.save("reordered.pdf")
+
     grps = split_doc(out,split_mode,split_lst,grp_counts)
 
     stem = input_path.stem
+    print(stem)
 
     print(grps)
     for grp in grps:
-        if (stem := grp[0]) is None:
-            stem = input_path.stem
-        print("STEM:",stem)
-        for id,doc in enumerate(grp[1::],start=1):
-            filename = format_string.format(stem = stem,id = f"{id:02d}")
-            out_file = output_path / filename
-            doc.save(out_file)
-            print(f"PDF saved to: {out_file.stem}")
+        print(grp[0] == None)
+        if isinstance(grp[0],str):
+            stem = grp[0]
+            for id,doc in enumerate(grp[1::],start=1):
+                print("hello")
+                filename = format_string.format(stem = stem,id = f"{id:02d}")
+                out_file = output_path / filename
+                doc.save(out_file)
+                print(f"PDF saved to: {out_file.stem}")
+        else:
+    
 
     src.close()

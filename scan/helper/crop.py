@@ -23,6 +23,7 @@ def crop_doc(
     crop_mode:CropMode,
     margin: list[int] | None
 ) -> None:
+    print(crop_mode)
     if crop_mode == CropMode.NONE or crop_mode is None:
         return
     elif crop_mode == CropMode.DEFAULT:
